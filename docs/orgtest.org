@@ -1,0 +1,98 @@
+* price
+
+#+CAPTION: 报价1
+| 项目   | 型号                 | 单价 | 数量 | 总价 |
+|--------+----------------------+------+------+------|
+| cpu    | i7 7700              | 1870 |    1 | 1870 |
+| 内存   | 金士顿8G             |  358 |    2 |  716 |
+| 主板   | 技嘉 B250m-d3v       |  445 |    1 |  445 |
+| 显卡   | 技嘉 GV-N1070WF2-8GD | 2730 |    1 | 2730 |
+| 硬盘   | 自带                 |      |      |    0 |
+| 机箱   | 自带                 |      |      |    0 |
+| 电源   | 自带                 |      |      |    0 |
+| 显示器 | 自带                 |      |      |    0 |
+|--------+----------------------+------+------+------|
+| 小结   |                      |      |      | 5761 |
+#+TBLFM: $5=$3*$4
+
+#+CAPTION: 报价2
+#+NAME: price2
+| item   | 型号                        | 单价 | 数量 | total |
+|--------+-----------------------------+------+------+-------|
+| cpu    | i7 7700                     | 1870 |    1 |  1870 |
+| 内存   | 金士顿8G                    |  358 |    2 |   716 |
+| 主板   | 华硕 B150 pro gaming ddr4   |  740 |    1 |   740 |
+| 显卡   | 华硕 STRIX-GTX1070-8G-GMING | 2800 |    1 |  2800 |
+| 硬盘   | 自带                        |      |      |     0 |
+| 机箱   | 自带                        |      |      |     0 |
+| 电源   | 自带                        |      |      |     0 |
+| 显示器 | 自带                        |      |      |     0 |
+|--------+-----------------------------+------+------+-------|
+| 小结   |                             |      |      |  6126 |
+#+TBLFM: $5=$3*$4
+
+#+CAPTION: 报价3
+#+NAME: price4
+| item   | 型号                        | 单价 | 数量 | total |
+|--------+-----------------------------+------+------+-------|
+| cpu    | i7 7700                     | 1870 |    1 |  1870 |
+| 内存   | 金士顿8G                    |  358 |    2 |   716 |
+| 主板   | 华硕 B150 pro gaming ddr4   |  740 |    1 |   740 |
+| 显卡   | 华硕 STRIX-GTX1070-8G-GMING | 2800 |    1 |  2800 |
+| 硬盘   | 三星evo 850 120g            |  395 |    1 |   395 |
+| 硬盘   | WD 蓝 1T                    |  285 |    1 |   285 |
+| 机箱   | 自带                        |      |      |     0 |
+| 电源   | 航嘉WD500 v2 500w           |  280 |    1 |   280 |
+| 显示器 | 自带                        |      |      |     0 |
+|--------+-----------------------------+------+------+-------|
+| 小结   |                             |      |      |  7086 |
+#+TBLFM: $5=$3*$4
+
+
+#+CAPTION: 报价3
+#+NAME: price3
+| a| 1870 |
+| b|  716 |
+| c|  740 |
+| d| 2800 |
+| e|    0 |
+| f|    0 |
+| g|    0 |
+| h |    0 |
+| i| 6126 |
+
+#+BEGIN_SRC python :var tbl_data=price2 :results output :preamble "# -*- coding:utf-8 -*-"
+
+print tbl_data
+#+END_SRC
+
+#+RESULTS:
+: [['item', '\xe5\x9e\x8b\xe5\x8f\xb7', '\xe5\x8d\x95\xe4\xbb\xb7', '\xe6\x95\xb0\xe9\x87\x8f', 'total'], ['cpu', 'i7 7700', 1870, 1, 1870], ['\xe5\x86\x85\xe5\xad\x98', '\xe9\x87\x91\xe5\xa3\xab\xe9\xa1\xbf8G', 358, 2, 716], ['\xe4\xb8\xbb\xe6\x9d\xbf', '\xe5\x8d\x8e\xe7\xa1\x95 B150 pro gaming ddr4', 740, 1, 740], ['\xe6\x98\xbe\xe5\x8d\xa1', '\xe5\x8d\x8e\xe7\xa1\x95 STRIX-GTX1070-8G-GMING', 2800, 1, 2800], ['\xe7\xa1\xac\xe7\x9b\x98', '\xe8\x87\xaa\xe5\xb8\xa6', '', '', 0], ['\xe6\x9c\xba\xe7\xae\xb1', '\xe8\x87\xaa\xe5\xb8\xa6', '', '', 0], ['\xe7\x94\xb5\xe6\xba\x90', '\xe8\x87\xaa\xe5\xb8\xa6', '', '', 0], ['\xe6\x98\xbe\xe7\xa4\xba\xe5\x99\xa8', '\xe8\x87\xaa\xe5\xb8\xa6', '', '', 0], ['\xe5\xb0\x8f\xe7\xbb\x93', '', '', '', 6126]]
+
+
+
+#+BEGIN_SRC python :var tbl_data=price3 filename="./3.png" :preamble "# -*- coding:utf-8 -*-"
+  import numpy as np
+  import matplotlib
+  import matplotlib.pyplot as plt
+
+  plt.style.use('ggplot')
+
+
+  bar_names = [row[0] for row in tbl_data]
+  h_index = [row[1] for row in tbl_data]
+  ind = np.arange(len(tbl_data))
+  width = 0.5
+
+  plt.bar(ind, h_index, width)
+  plt.title('price2')
+  plt.xlabel('item')
+  plt.ylabel('total')
+  plt.xticks(ind + width/2., bar_names)
+
+  plt.savefig(filename)
+  return(filename)
+#+END_SRC
+
+#+RESULTS:
+: ./3.png
