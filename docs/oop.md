@@ -39,6 +39,7 @@ File 里有很多属性，比如名字，父目录，你都看不到，但是你
 
 2. 继承：刚才游戏的例子已经说过了。
 3. 多态：一个司机，他会 drive(Car c)，这个时候你给他个 Porsche BMW Bench，他都能开：
+
 ```java
 class Driver{
     void drive(Car c){ // 方法定义的时候，参数只写了 Car，但是传入的时候，宝马奔驰都能传进去
