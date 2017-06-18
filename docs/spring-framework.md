@@ -166,7 +166,7 @@ public class Client {
 ApplicationContext 就是上面提到的 IoC 容器，负责初始化、配置、组装 Bean。它通过读取配置信息来确定要初始化的 Bean 以及怎么初始化。配置信息可以是 xml，Java 注解，以及 Java 代码。本例用的就是 xml 的方式。Spring 为我们定义好了一些开箱即用的 ApplicationContext 实现类.这个 ClassPathXmlApplicationContext 就是其中一种，顾名思义，这个类是从 classpath 下面搜寻 xml 以获取配置信息。查看源码 ClassPathXmlApplicationContext 最终__继承 DefaultResourceLoader__，并实现了ApplicationContext 的 一个子接口 ConfigurableApplicationContext。类似的实现还有 FileSystemXmlAplicationContext。正如下图所示：
 </div>
 
-![classpathapplicationcontext.uml](../resources/classpathxmlapplicationcontext_reversion.png)
+![classpathapplicationcontext.uml](classpathxmlapplicationcontext_reversion.png)
 
 一目了然，该图的右半部分保证了这些容器能够从任意位置获取配置文件，而左半部分便是 Spring Ioc 容器的核心结构。该图出现的 BeanFactory，就是本文的重点。
 
@@ -283,7 +283,7 @@ ApplicationContext 就是上面提到的 IoC 容器，负责初始化、配置�
 	}
 ```
 
- ![DefaultListableBeanFactory.uml](../resources/DefaultListableBeanFactory.png)
+ ![DefaultListableBeanFactory.uml](DefaultListableBeanFactory.png)
 
 接近谜底了，看看 refreshBeanFactory() 剩下的代码做了什么吧。 // 1-4 loadBeanDefinitions(beanFactory) 看来是对 factory 做了点什么。下面是源码：
 
@@ -325,12 +325,12 @@ ApplicationContext 就是上面提到的 IoC 容器，负责初始化、配置�
 
 整个过程用时序图如下图所示：
 
-![context_beandefinitionsreader.uml](../resources/context_beandefinitionsreader.png)
+![context_beandefinitionsreader.uml](context_beandefinitionsreader.png)
 
 ### ResourceLoader
 前面说到 ApplicationContext 是 DefaultResourceLoader 的子类，因此才获得了从任意位置获取资源的能力。获取到资源的位置后再调用统一接口方法 getInputStream() 而不用管这个资源是什么形式，这种抽象方法很值得学习。来看看 Spring 是如何做到这点的。
 
-![resourceLoader.uml](../resources/resourceLoader.png)
+![resourceLoader.uml](resourceLoader.png)
 
 上一小节提到 loadBeanDefinitions() 方法，该方法会最终在 AbstractBeanDefinitionReader.loadBeanDefinitions(String, Set&lt;Resource&gt;) 处获取设置的 resourceLoader ，由于 ApplicationContext 实现了 ResourcePatternResolver，因此可以调用其 getResources 方法：
 
@@ -447,7 +447,7 @@ public int loadBeanDefinitions(String location, Set&lt;Resource&gt; actualResour
 
 这里是完整的时序图。
 
-![xmlBeanDefinitionReader-beanRegistration.uml](../resources/mlBeanDefinitionReader-beanRegistration.png)
+![xmlBeanDefinitionReader-beanRegistration.uml](mlBeanDefinitionReader-beanRegistration.png)
 
 ### Bean 的创建
 回到开始的 AbstractApplicationContext.refresh() 方法。此时我们创建了 BeanFactory，注册了各种 Bean，但是还没有创建出这些 Bean. 该方法在 refresh() 方法的 
