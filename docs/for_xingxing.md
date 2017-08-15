@@ -1,4 +1,4 @@
-```
+```shell
 #! /bin/bash
 dir=$1
 totalTime=0
